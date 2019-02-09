@@ -32,7 +32,7 @@ module WatcherFilter
   end
 end
 
-ActionDispatch::Reloader.to_prepare do
+ActiveSupport::Reloader.to_prepare do
   if not WatchersHelper.included_modules.include?(WatcherFilter::WatchersHelperPatch)
     WatchersHelper.send(:include, WatcherFilter::WatchersHelperPatch)
   end

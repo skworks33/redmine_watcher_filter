@@ -16,7 +16,7 @@ module WatcherFilter
   end
 end
 
-ActionDispatch::Reloader.to_prepare do
+ActiveSupport::Reloader.to_prepare do
   if not User.included_modules.include?(WatcherFilter::UserPatch)
     User.send(:include, WatcherFilter::UserPatch)
   end
