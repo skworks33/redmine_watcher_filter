@@ -14,8 +14,8 @@ module WatcherFilter
         def render_group_select(project)
           list = []
           if project.present?
-            list = [[l(:watcher_filter_not_in_any_group), -1]]
-            list.concat(project.principals.where("#{Principal.table_name}.type = ?", 'Group').sorted.map{|g| [g.name, g.id]})
+            list = [[l(:watcher_filter_not_in_any_group), -1]] # "グループ無所属"
+            list.concat(Group.all.order(:id).map{|g| [g.name, g.id]}) # Get all groups on Redmine
           end
           select_tag 'user_search_by_group', options_for_select(list), :prompt => "#{l(:watcher_filter_group_select)}"
         end

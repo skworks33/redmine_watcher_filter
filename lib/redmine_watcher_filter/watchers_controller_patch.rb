@@ -7,12 +7,10 @@ module WatcherFilter
     def users_for_new_watcher
       users = super
 
-      scope = nil
-      if params[:q].blank? && @project.present?
-        scope = @project.users
-      else
-        scope = User.all.limit(100)
-      end
+      # Display name when unfiltered.
+      # Be careful when data volume increases.
+      scope = User.all
+
       if params[:cfv_q].present?
         scope = scope.joins(:custom_values => :custom_field).
           merge(CustomValue.like(params[:cfv_q])).merge(CustomField.visible)
